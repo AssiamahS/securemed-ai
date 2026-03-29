@@ -1,0 +1,15 @@
+server:
+  host: "127.0.0.1"
+  port: 8080
+
+ollama:
+  model: "qwen2.5:7b"
+  base_url: "http://127.0.0.1:11434"
+
+logging:
+  audit_log: "logs/audit.log"
+  level: "INFO"
+
+security:
+  api_key_required: true
+  max_tokens: 4096
