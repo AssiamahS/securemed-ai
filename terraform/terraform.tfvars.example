@@ -1,0 +1,14 @@
+# Copy to terraform.tfvars and fill in your values
+# NEVER commit terraform.tfvars — it contains sensitive data
+
+aws_region     = "us-east-1"
+environment    = "production"
+key_name       = "your-ssh-key-name"
+
+# CRITICAL: Set to your clinic's actual public IP(s)
+# Find yours: curl -s ifconfig.me
+allowed_cidrs = ["YOUR.CLINIC.IP/32"]
+
+# Instance sizing
+llm_instance_type = "t3.xlarge"  # 16GB RAM — Qwen 13B
+elk_instance_type = "t3.large"   # 8GB RAM — ELK stack

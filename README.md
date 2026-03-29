@@ -1,104 +1,170 @@
-# HIPAA-Compliant Private LLM
+# HIPAA-Compliant Private LLM for Clinics
 
-A locally-hosted LLM setup using Ollama + Qwen 2.5, designed for HIPAA-compliant medical data processing. No data ever leaves your machine.
+One-click HIPAA-compliant infrastructure: private LLM (Ollama + Qwen), ELK monitoring, Terraform IaC, and GitHub CI/CD.
 
 ## Architecture
 
 ```
-[Client] --> [localhost:11434] --> [Ollama + Qwen 2.5 7B]
-                                       |
-                                  [Local Storage Only]
-                                  [No External API Calls]
+                        ┌─────────────────────────────────────────┐
+                        │           AWS VPC (Private)              │
+                        │                                          │
+  Clinic Staff ──VPN──> │  ┌─────────────┐    ┌────────────────┐  │
+                        │  │ LLM Server  │    │  ELK Monitor   │  │
+                        │  │             │    │                │  │
+                        │  │ Ollama      │───>│ Elasticsearch  │  │
+                        │  │ Qwen 2.5    │    │ Logstash       │  │
+                        │  │ FastAPI     │    │ Kibana         │  │
+                        │  │ Filebeat    │    │                │  │
+                        │  └─────────────┘    └────────────────┘  │
+                        │                                          │
+                        │  KMS Encryption | CloudTrail | VPC Logs  │
+                        └─────────────────────────────────────────┘
 ```
 
-## Why This Is HIPAA-Compliant
+## What's Included
 
-- **No cloud dependency** — model runs 100% locally via Ollama
-- **No data egress** — PHI never leaves the machine
-- **No third-party APIs** — unlike ChatGPT/Claude, no BAA needed for the LLM itself
-- **Audit logging** — all queries logged locally with timestamps
-- **Access control** — binds to localhost only by default
+| Component | Purpose | HIPAA Role |
+|-----------|---------|------------|
+| **Terraform** | One-command infrastructure deployment | Reproducible, auditable infrastructure |
+| **Ollama + Qwen 2.5** | Private LLM — no data leaves your network | Zero PHI egress |
+| **ELK Stack** | Centralized logging and monitoring | Audit trail, anomaly detection |
+| **GitHub Actions** | CI/CD with security scanning | Automated compliance checks |
+| **AWS KMS** | Encryption at rest | HIPAA encryption requirement |
+| **CloudTrail** | API audit logging | HIPAA audit requirement |
+| **VPC Flow Logs** | Network traffic monitoring | HIPAA access monitoring |
 
 ## Quick Start
 
-### Prerequisites
-- macOS with Apple Silicon (M1+) or Linux
-- 16GB+ RAM
-- Homebrew (macOS)
-
-### Install
+### Local Development (Your Mac)
 
 ```bash
-# Install Ollama
+# Install Ollama + Qwen
 brew install ollama
-
-# Start the service
 brew services start ollama
-
-# Pull the model
 ollama pull qwen2.5:7b
-```
 
-### Run the API Server
-
-```bash
-# Install dependencies
+# Run the API
 pip install -r requirements.txt
-
-# Start the HIPAA-compliant API
 python server.py
 ```
 
-The server runs at `http://localhost:8080` with:
-- Request/response audit logging
-- No external network calls
-- Input sanitization
+### Production Deployment (AWS)
 
-### Test It
+```bash
+# 1. Configure
+cd terraform
+cp terraform.tfvars.example terraform.tfvars
+# Edit terraform.tfvars with your clinic's IP and AWS key
+
+# 2. Preview
+terraform init
+terraform plan
+
+# 3. Deploy
+terraform apply
+```
+
+This creates:
+- Private VPC with no public-facing resources
+- LLM server (t3.xlarge, 16GB RAM) with encrypted EBS
+- ELK monitoring server with 100GB encrypted storage
+- KMS encryption, CloudTrail audit, VPC flow logs
+- Security groups locked to your clinic's IP only
+
+### Test the API
 
 ```bash
 curl -X POST http://localhost:8080/api/query \
+  -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"prompt": "Summarize HIPAA Privacy Rule requirements"}'
 ```
 
-## HIPAA Compliance Checklist
+## Project Structure
 
-| Requirement | Status | Implementation |
-|------------|--------|---------------|
-| Data at rest encryption | Required | Enable FileVault (macOS) or LUKS (Linux) |
-| Data in transit encryption | N/A | Localhost only — no network transit |
-| Access controls | Included | API key auth, localhost binding |
-| Audit logging | Included | All queries logged to `logs/audit.log` |
-| No data egress | Included | Model runs fully offline |
-| BAA with LLM provider | N/A | No third-party LLM provider |
-
-## Configuration
-
-Edit `config.yaml` to customize:
-
-```yaml
-server:
-  host: "127.0.0.1"  # localhost only — do NOT change to 0.0.0.0
-  port: 8080
-
-ollama:
-  model: "qwen2.5:7b"
-  base_url: "http://127.0.0.1:11434"
-
-logging:
-  audit_log: "logs/audit.log"
-  level: "INFO"
-
-security:
-  api_key_required: true
-  max_tokens: 4096
+```
+hippa/
+├── server.py                    # FastAPI LLM API with audit logging
+├── config.yaml                  # Server configuration
+├── requirements.txt             # Python dependencies
+├── terraform/
+│   ├── main.tf                  # Root module — orchestrates everything
+│   ├── variables.tf             # Input variables
+│   ├── outputs.tf               # Output values
+│   ├── terraform.tfvars.example # Template for your config
+│   └── modules/
+│       ├── networking/          # VPC, subnets, NAT, flow logs
+│       ├── security/            # KMS, security groups, CloudTrail
+│       └── compute/             # EC2 instances (LLM + ELK)
+├── docker/
+│   └── elk/
+│       ├── docker-compose.yml   # ELK stack (Elasticsearch, Logstash, Kibana)
+│       ├── .env.example         # ELK passwords template
+│       └── logstash/pipeline/
+│           └── hipaa.conf       # Log parsing + PHI scrubbing
+└── .github/
+    └── workflows/
+        └── deploy.yml           # CI/CD: security scan → plan → apply
 ```
 
-## Important Notes
+## HIPAA Compliance Matrix
 
-- **Do NOT expose port 8080 or 11434 to the internet**
-- Enable full-disk encryption on your machine
-- Rotate API keys regularly
-- Review audit logs periodically
-- This setup handles the LLM component — you still need compliant practices for data storage, user authentication, and organizational policies
+| Requirement | Implementation | Status |
+|------------|---------------|--------|
+| Encryption at rest | AWS KMS + encrypted EBS volumes | Included |
+| Encryption in transit | VPC-internal only, TLS available | Included |
+| Access controls | Security groups, API keys, VPN-only access | Included |
+| Audit logging | CloudTrail + ELK + application audit logs | Included |
+| PHI data scrubbing | Logstash pipeline redacts SSN/email/phone from logs | Included |
+| Network monitoring | VPC Flow Logs to CloudWatch | Included |
+| Backup & recovery | `terraform apply` rebuilds entire infrastructure | Included |
+| BAA with cloud provider | AWS BAA available via AWS Artifact | Required |
+| Minimum necessary access | Private subnets, clinic-IP-only security groups | Included |
+
+## CI/CD Pipeline
+
+Every push to `main` triggers:
+
+1. **Security Scan** — TruffleHog (secrets), tfsec (Terraform misconfigs), port binding check
+2. **Terraform Plan** — preview infrastructure changes (on PRs)
+3. **Terraform Apply** — deploy to AWS (on merge, requires manual approval)
+4. **API Tests** — verify security defaults in config
+
+## ELK Monitoring
+
+The ELK stack collects and monitors:
+
+- **LLM audit logs** — every query (prompt length, not content), response times, API key usage
+- **Linux auditd** — system-level access tracking
+- **System logs** — syslog for security events
+- **PHI scrubbing** — Logstash automatically redacts SSN, email, and phone patterns from all logs
+
+Access Kibana via SSH tunnel:
+```bash
+ssh -L 5601:elk-private-ip:5601 ubuntu@bastion
+# Then open http://localhost:5601
+```
+
+## Security Notes
+
+- All resources are in private subnets — no public IPs
+- Security groups restrict access to your clinic's IP range only
+- IMDSv2 required on all instances (prevents SSRF attacks)
+- KMS key rotation enabled automatically
+- CloudTrail logs are encrypted and versioned in S3
+- ELK ports bound to `127.0.0.1` only inside Docker
+- The LLM API never logs prompt content (PHI risk)
+- API keys are stored as SHA-256 hashes
+
+## Cost Estimate
+
+| Resource | Monthly Cost |
+|----------|-------------|
+| t3.xlarge (LLM) | ~$120 |
+| t3.large (ELK) | ~$60 |
+| NAT Gateway | ~$32 |
+| EBS Storage (150GB) | ~$12 |
+| CloudTrail + S3 | ~$5 |
+| **Total** | **~$229/mo** |
+
+Destroy everything when not in use: `terraform destroy`

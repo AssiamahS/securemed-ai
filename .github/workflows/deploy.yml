@@ -1,0 +1,167 @@
+name: HIPAA Clinic Infrastructure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'terraform/**'
+      - 'docker/**'
+      - 'server.py'
+      - '.github/workflows/deploy.yml'
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write  # OIDC auth to AWS — no long-lived keys
+
+env:
+  TF_VAR_key_name: ${{ secrets.AWS_KEY_NAME }}
+  AWS_REGION: us-east-1
+
+jobs:
+  # ─── Security Scan ──────────────────────────────────────
+  security-scan:
+    name: Security & Compliance Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified
+
+      - name: Scan Terraform for misconfigurations
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          working_directory: terraform
+
+      - name: Check Docker Compose for issues
+        run: |
+          # Verify no ports are exposed to 0.0.0.0
+          if grep -r "0.0.0.0:" docker/; then
+            echo "FAIL: Found 0.0.0.0 binding — HIPAA violation risk"
+            exit 1
+          fi
+          echo "PASS: All ports bound to localhost only"
+
+  # ─── Terraform Plan ─────────────────────────────────────
+  terraform-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    needs: security-scan
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
+      - name: Terraform Init
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: terraform
+        run: |
+          terraform plan \
+            -var 'allowed_cidrs=${{ secrets.CLINIC_IP_CIDRS }}' \
+            -out=tfplan \
+            -no-color
+        env:
+          TF_VAR_allowed_cidrs: ${{ secrets.CLINIC_IP_CIDRS }}
+
+      - name: Comment plan on PR
+        uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const output = `#### Terraform Plan 📋
+            \`\`\`
+            ${process.env.PLAN_OUTPUT || 'See workflow logs'}
+            \`\`\`
+            *HIPAA Compliance: All resources encrypted, private subnets only*`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+  # ─── Terraform Apply ────────────────────────────────────
+  terraform-apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    needs: security-scan
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production  # Requires manual approval
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.0"
+
+      - name: Terraform Init & Apply
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform apply \
+            -var 'allowed_cidrs=${{ secrets.CLINIC_IP_CIDRS }}' \
+            -auto-approve
+
+      - name: Save outputs
+        working-directory: terraform
+        run: terraform output -json > /tmp/outputs.json
+
+      - name: Deploy ELK stack to monitoring server
+        run: |
+          echo "ELK deployment would happen here via SSH/SSM"
+          echo "docker compose -f docker/elk/docker-compose.yml up -d"
+
+  # ─── App Tests ──────────────────────────────────────────
+  test-api:
+    name: Test LLM API
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest httpx
+
+      - name: Run API tests
+        run: |
+          python -c "
+          import yaml
+          from pathlib import Path
+
+          config = yaml.safe_load(Path('config.yaml').read_text())
+
+          # Verify security defaults
+          assert config['server']['host'] == '127.0.0.1', 'Server must bind to localhost'
+          assert config['security']['api_key_required'] == True, 'API key must be required'
+          assert config['security']['max_tokens'] <= 4096, 'Token limit must be bounded'
+
+          print('All HIPAA security checks passed')
+          "

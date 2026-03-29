@@ -1,0 +1,72 @@
+version: "3.8"
+
+# HIPAA-compliant ELK Stack
+# All data encrypted, no public exposure, audit logging enabled
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: hipaa-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - xpack.security.audit.enabled=true  # HIPAA audit logging
+      - xpack.security.audit.logfile.events.include=access_granted,access_denied,authentication_failed
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - xpack.license.self_generated.type=basic
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    ports:
+      - "127.0.0.1:9200:9200"  # localhost only
+    networks:
+      - elk
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-u", "elastic:${ELASTIC_PASSWORD}", "http://localhost:9200/_cluster/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.17.0
+    container_name: hipaa-logstash
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "127.0.0.1:5044:5044"  # Filebeat input — localhost only
+    environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - LS_JAVA_OPTS=-Xms512m -Xmx512m
+    networks:
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.17.0
+    container_name: hipaa-kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+      - xpack.security.audit.enabled=true
+      - xpack.encryptedSavedObjects.encryptionKey=${KIBANA_ENCRYPTION_KEY}
+    ports:
+      - "127.0.0.1:5601:5601"  # localhost only — access via SSH tunnel or VPN
+    networks:
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  es-data:
+    driver: local
+
+networks:
+  elk:
+    driver: bridge
