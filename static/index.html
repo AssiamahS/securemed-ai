@@ -131,6 +131,7 @@
         </div>
         <div style="display:flex; align-items:center; gap:16px;">
             <div class="user-info" id="userInfo"></div>
+            <button onclick="logout()" style="background:none;border:1px solid #475569;color:#94a3b8;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer">Logout</button>
             <div class="status-badges">
                 <div class="badge"><div class="dot"></div> Online</div>
                 <div class="badge"><div class="dot"></div> Encrypted</div>
@@ -413,6 +414,12 @@
             document.getElementById('filePreview').style.display = 'none';
             document.getElementById('uploadResult').style.display = 'none';
             document.getElementById('fileInput').value = '';
+        }
+
+        function logout() {
+            localStorage.removeItem('securemed_key');
+            apiKey = '';
+            location.reload();
         }
 
         function formatSize(bytes) {
