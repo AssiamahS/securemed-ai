@@ -16,6 +16,9 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+from phi_redactor import PHIRedactor
+from prompt_library import TEMPLATES, list_templates, get_template, get_categories
+
 # Load config
 config_path = Path(__file__).parent / "config.yaml"
 with open(config_path) as f:
@@ -84,6 +87,9 @@ def save_users(users: dict):
 
 
 users_db = load_users()
+
+# PHI Redaction engine
+phi_redactor = PHIRedactor(aggressive=True)
 
 
 def verify_user(authorization: str | None) -> tuple[str, dict]:
@@ -232,6 +238,16 @@ async def upload_document(
     if not text.strip():
         raise HTTPException(status_code=400, detail="Could not extract text from file")
 
+    # PHI pre-processing: redact identifiers before sending to LLM
+    redaction = phi_redactor.redact(text)
+    text = redaction.clean_text
+
+    if redaction.redaction_count > 0:
+        audit_logger.info(
+            f"PHI_REDACTED | id={request_id} | count={redaction.redaction_count} | "
+            f"categories={redaction.categories}"
+        )
+
     # Truncate to fit context window (Qwen 2.5 7B = 128K tokens, ~4 chars/token)
     max_chars = 100_000
     truncated = len(text) > max_chars
@@ -278,6 +294,8 @@ async def upload_document(
         "response": data["response"],
         "document_chars": len(text),
         "truncated": truncated,
+        "phi_redacted": redaction.redaction_count,
+        "phi_categories": redaction.categories,
         "model": MODEL,
         "user": user["name"],
         "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -409,6 +427,132 @@ async def get_audit_log(
     all_lines = log_path.read_text().strip().split("\n")
     recent = all_lines[-lines:]
     return {"entries": recent, "total": len(all_lines)}
+
+
+# ─── PHI Redaction Service ───────────────────────────────
+class RedactRequest(BaseModel):
+    text: str
+
+
+@app.post("/api/redact")
+async def redact_text(
+    request: RedactRequest,
+    authorization: str | None = Header(default=None),
+):
+    """Pre-process text to redact PHI before any analysis. Use this to safely
+    ingest legacy notes, faxes, or unstructured clinical data."""
+    key_id, user = verify_user(authorization)
+    check_permission(user, "upload")
+
+    result = phi_redactor.redact(request.text)
+    audit_logger.info(
+        f"PHI_REDACT | user={user['name']} | input_len={len(request.text)} | "
+        f"redacted={result.redaction_count} | categories={result.categories}"
+    )
+
+    return {
+        "clean_text": result.clean_text,
+        "redaction_count": result.redaction_count,
+        "categories": result.categories,
+    }
+
+
+@app.post("/api/phi-scan")
+async def scan_for_phi(
+    request: RedactRequest,
+    authorization: str | None = Header(default=None),
+):
+    """Scan text for PHI without redacting. Pre-flight check before sending to LLM."""
+    key_id, user = verify_user(authorization)
+    scan_result = phi_redactor.scan(request.text)
+    return scan_result
+
+
+# ─── Prompt Library ──────────────────────────────────────
+@app.get("/api/templates")
+async def get_templates(
+    category: str | None = None,
+    authorization: str | None = Header(default=None),
+):
+    """List available clinical workflow templates."""
+    verify_user(authorization)
+    return {
+        "templates": list_templates(category),
+        "categories": get_categories(),
+    }
+
+
+class TemplateQueryRequest(BaseModel):
+    template_id: str
+    input_text: str
+    max_tokens: int = 4096
+
+
+@app.post("/api/templates/run")
+async def run_template(
+    request: TemplateQueryRequest,
+    authorization: str | None = Header(default=None),
+):
+    """Run a clinical workflow template with PHI pre-processing."""
+    key_id, user = verify_user(authorization)
+    check_permission(user, "query")
+    request_id = str(uuid.uuid4())[:8]
+
+    template = get_template(request.template_id)
+    if not template:
+        raise HTTPException(status_code=404, detail=f"Template '{request.template_id}' not found")
+
+    # PHI redaction before sending to model
+    redaction = phi_redactor.redact(request.input_text)
+    clean_input = redaction.clean_text
+
+    if redaction.redaction_count > 0:
+        audit_logger.info(
+            f"TEMPLATE_PHI_REDACTED | id={request_id} | template={request.template_id} | "
+            f"count={redaction.redaction_count}"
+        )
+
+    prompt = f"{template['system_prompt']}\n\n---\n\nINPUT:\n{clean_input}"
+    tokens = min(request.max_tokens, MAX_TOKENS)
+
+    audit_logger.info(
+        f"TEMPLATE_RUN | id={request_id} | user={user['name']} | "
+        f"template={request.template_id} | input_len={len(clean_input)}"
+    )
+
+    try:
+        async with httpx.AsyncClient(timeout=300.0) as client:
+            response = await client.post(
+                f"{OLLAMA_URL}/api/generate",
+                json={
+                    "model": MODEL,
+                    "prompt": prompt,
+                    "stream": False,
+                    "options": {"num_predict": tokens},
+                },
+            )
+            response.raise_for_status()
+            data = response.json()
+    except httpx.ConnectError:
+        raise HTTPException(status_code=503, detail="Ollama is not running")
+    except httpx.HTTPStatusError:
+        raise HTTPException(status_code=502, detail="Model error")
+
+    audit_logger.info(
+        f"TEMPLATE_RESPONSE | id={request_id} | response_len={len(data.get('response', ''))}"
+    )
+
+    return {
+        "id": request_id,
+        "template": request.template_id,
+        "template_name": template["name"],
+        "response": data["response"],
+        "phi_redacted": redaction.redaction_count,
+        "phi_categories": redaction.categories,
+        "model": MODEL,
+        "user": user["name"],
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
 
 
 # ─── Health ──────────────────────────────────────────────
