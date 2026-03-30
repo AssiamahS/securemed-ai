@@ -1,0 +1,57 @@
+REFERRAL REQUEST
+===========================
+Date: 03/20/2026
+From: Dr. Amit Patel, MD — Primary Care
+To: Endocrinology
+Facility: Riverside Community Health Center
+
+PATIENT DEMOGRAPHICS
+Name: James W. (Demo Patient — Not Real)
+DOB: 11/03/1968 | Age: 57 | Sex: Male
+MRN: DEMO-2026-0003
+Insurance: Blue Cross PPO
+
+REASON FOR REFERRAL
+New diagnosis of hypothyroidism with significantly elevated TSH. Patient also has worsening lipid panel that may be related to thyroid dysfunction. Requesting endocrinology evaluation and management.
+
+CLINICAL SUMMARY
+57-year-old male presenting with 4-month history of progressive fatigue, weight gain (18 lbs in 4 months), cold intolerance, constipation, and dry skin. Initial workup reveals:
+
+Lab Results (03/20/2026):
+- TSH: 8.4 mIU/L (H) [ref: 0.4-4.0]
+- Free T4: 0.6 ng/dL (L) [ref: 0.8-1.8]
+- Total Cholesterol: 268 mg/dL (H)
+- LDL: 178 mg/dL (H)
+- Anti-TPO antibodies: 342 IU/mL (H) [ref: <35]
+
+Past Medical History:
+- Hyperlipidemia (previously controlled on atorvastatin 20mg)
+- Benign prostatic hyperplasia
+- No prior thyroid disease
+- No neck radiation history
+
+Family History:
+- Mother: Hashimoto's thyroiditis
+- Sister: Graves' disease
+
+Current Medications:
+1. Atorvastatin 20mg daily
+2. Tamsulosin 0.4mg daily
+
+Physical Exam Findings:
+- Thyroid: Diffusely enlarged, firm, non-tender, no nodules palpated
+- Skin: Dry, coarse
+- DTRs: Delayed relaxation phase bilaterally
+- HR: 58 bpm (bradycardia)
+- BP: 138/88 mmHg
+
+QUESTIONS FOR CONSULTANT
+1. Confirm Hashimoto's diagnosis and initiate levothyroxine — appropriate starting dose?
+2. Is thyroid ultrasound indicated given diffuse enlargement?
+3. Should lipid management be deferred until thyroid function normalizes?
+4. Monitoring schedule recommendations?
+
+URGENCY: Routine (within 2-4 weeks)
+
+Electronically signed by: Dr. Amit Patel, MD
+Date/Time: 03/20/2026 16:45 EST

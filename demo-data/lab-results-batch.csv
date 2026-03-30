@@ -1,0 +1,32 @@
+MRN,Patient_Name,Test_Date,Test_Name,Result,Units,Reference_Range,Flag,Ordering_Provider
+DEMO-0001,Robert M.,2026-03-15,Troponin I,0.08,ng/mL,<0.04,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Troponin I (6hr),0.14,ng/mL,<0.04,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Troponin I (12hr),0.11,ng/mL,<0.04,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,BNP,245,pg/mL,<100,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Total Cholesterol,242,mg/dL,<200,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,LDL,158,mg/dL,<100,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,HDL,38,mg/dL,>40,LOW,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Triglycerides,230,mg/dL,<150,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,HbA1c,8.2,%,<7.0,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Glucose (fasting),186,mg/dL,70-100,HIGH,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Creatinine,1.1,mg/dL,0.7-1.3,NORMAL,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Sodium,140,mEq/L,136-145,NORMAL,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Potassium,4.2,mEq/L,3.5-5.0,NORMAL,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,WBC,8.2,K/uL,4.5-11.0,NORMAL,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Hemoglobin,14.1,g/dL,13.5-17.5,NORMAL,Dr. Chen
+DEMO-0001,Robert M.,2026-03-15,Platelets,245,K/uL,150-400,NORMAL,Dr. Chen
+DEMO-0002,Emily T.,2026-03-18,WBC,14.8,K/uL,5.0-13.0,HIGH,Dr. Gonzalez
+DEMO-0002,Emily T.,2026-03-18,Hemoglobin,11.8,g/dL,11.0-14.0,NORMAL,Dr. Gonzalez
+DEMO-0002,Emily T.,2026-03-18,CRP,4.2,mg/dL,<0.5,HIGH,Dr. Gonzalez
+DEMO-0002,Emily T.,2026-03-18,Rapid Strep,Negative,n/a,n/a,NORMAL,Dr. Gonzalez
+DEMO-0003,James W.,2026-03-20,TSH,8.4,mIU/L,0.4-4.0,HIGH,Dr. Patel
+DEMO-0003,James W.,2026-03-20,Free T4,0.6,ng/dL,0.8-1.8,LOW,Dr. Patel
+DEMO-0003,James W.,2026-03-20,Total Cholesterol,268,mg/dL,<200,HIGH,Dr. Patel
+DEMO-0003,James W.,2026-03-20,LDL,178,mg/dL,<100,HIGH,Dr. Patel
+DEMO-0003,James W.,2026-03-20,Glucose (fasting),94,mg/dL,70-100,NORMAL,Dr. Patel
+DEMO-0004,Linda K.,2026-03-21,HbA1c,9.1,%,<7.0,HIGH,Dr. Chen
+DEMO-0004,Linda K.,2026-03-21,Creatinine,1.8,mg/dL,0.6-1.2,HIGH,Dr. Chen
+DEMO-0004,Linda K.,2026-03-21,eGFR,38,mL/min,>60,LOW,Dr. Chen
+DEMO-0004,Linda K.,2026-03-21,Urine Albumin/Creatinine,320,mg/g,<30,HIGH,Dr. Chen
+DEMO-0004,Linda K.,2026-03-21,Potassium,5.4,mEq/L,3.5-5.0,HIGH,Dr. Chen
+DEMO-0004,Linda K.,2026-03-21,Hemoglobin,10.2,g/dL,12.0-16.0,LOW,Dr. Chen

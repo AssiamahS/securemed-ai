@@ -1,0 +1,74 @@
+PEDIATRIC VISIT NOTE
+===========================
+Date: 03/18/2026
+Provider: Dr. Maria Gonzalez, MD — Pediatrics
+Facility: Riverside Community Health Center
+
+PATIENT DEMOGRAPHICS
+Name: Emily T. (Demo Patient — Not Real)
+DOB: 09/22/2020 | Age: 5 | Sex: Female
+MRN: DEMO-2026-0002
+Parent/Guardian: Jessica T. (mother, present)
+
+CHIEF COMPLAINT
+"She's been coughing for 2 weeks and it's getting worse at night"
+
+HISTORY OF PRESENT ILLNESS
+5-year-old female brought in by mother for persistent cough x 2 weeks. Initially dry cough, now productive with yellow-green sputum. Worse at night and early morning. Associated with low-grade fever (max 100.4°F at home) x 3 days, decreased appetite, and rhinorrhea. No wheezing reported by parent but mother notes "she sounds raspy." No vomiting, diarrhea, or rash. Attending kindergarten — several classmates reportedly sick. Completed antibiotics (amoxicillin) for otitis media 6 weeks ago. No improvement with OTC cough syrup.
+
+PAST MEDICAL HISTORY
+- Recurrent otitis media (3 episodes in past 12 months)
+- Mild intermittent asthma (diagnosed age 3, uses albuterol PRN)
+- Born at 38 weeks, no NICU stay
+- Immunizations up to date per schedule
+
+CURRENT MEDICATIONS
+1. Albuterol HFA inhaler 2 puffs PRN (last used 1 week ago)
+2. Children's acetaminophen PRN for fever
+
+ALLERGIES
+NKDA
+
+DEVELOPMENTAL HISTORY
+Meeting all milestones. Speaks in full sentences. Dresses independently. Knows colors, shapes, and letters.
+
+VITAL SIGNS
+BP: 90/58 mmHg (normal for age)
+HR: 110 bpm
+RR: 24/min (mildly elevated)
+Temp: 100.8°F (tympanic)
+SpO2: 95% on room air
+Weight: 42 lbs (75th percentile)
+Height: 43 inches (60th percentile)
+
+PHYSICAL EXAMINATION
+General: Alert, active child. Appears mildly ill but playful. No respiratory distress at rest.
+HEENT: TMs slightly dull bilaterally but no erythema or bulging. Nasal mucosa erythematous with clear-yellow discharge. Pharynx mildly erythematous, no exudate. No tonsillar enlargement.
+Neck: Supple. Shotty anterior cervical lymphadenopathy bilaterally, non-tender.
+Lungs: Scattered expiratory wheezes bilateral lower lobes. Mild crackles right lower lobe posteriorly. No retractions. Good air entry.
+Cardiovascular: Regular rate and rhythm. No murmur.
+Abdomen: Soft, non-tender. No hepatosplenomegaly.
+Skin: No rash. No cyanosis.
+
+DIAGNOSTICS
+Rapid strep: Negative
+CXR (PA and lateral): Right lower lobe patchy opacity consistent with pneumonia. No pleural effusion. Heart size normal.
+
+ASSESSMENT
+1. Community-acquired pneumonia, right lower lobe
+2. Reactive airway disease / asthma exacerbation
+3. Recurrent otitis media — monitoring
+
+PLAN
+1. Amoxicillin 90mg/kg/day divided BID x 10 days (high-dose given recent antibiotic use)
+2. Prednisolone 1mg/kg/day x 5 days for asthma flare
+3. Continue albuterol q4-6h PRN, increase to scheduled q6h for next 5 days
+4. Acetaminophen or ibuprofen PRN for fever
+5. Push fluids, rest
+6. Return precautions given: worsening respiratory distress, persistent high fever >72hrs on antibiotics, decreased oral intake, lethargy
+7. Follow-up in 3-5 days or sooner if not improving
+8. Consider ENT referral if another otitis episode within 3 months — discuss tympanostomy tubes
+9. Asthma action plan reviewed with mother. Discussed adding daily low-dose ICS (fluticasone) given frequency of symptoms.
+
+Electronically signed by: Dr. Maria Gonzalez, MD
+Date/Time: 03/18/2026 10:15 EST

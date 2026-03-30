@@ -1,0 +1,87 @@
+PATIENT ENCOUNTER NOTE
+===========================
+Date: 03/15/2026
+Provider: Dr. Sarah Chen, MD — Internal Medicine
+Facility: Riverside Community Health Center
+
+PATIENT DEMOGRAPHICS
+Name: Robert M. (Demo Patient — Not Real)
+DOB: 07/14/1973 | Age: 52 | Sex: Male
+MRN: DEMO-2026-0001
+
+CHIEF COMPLAINT
+"Chest tightness and shortness of breath for the past 3 days, worse with exertion"
+
+HISTORY OF PRESENT ILLNESS
+52-year-old male presents with a 3-day history of substernal chest tightness described as "pressure-like," rated 5/10 at rest, increasing to 7/10 with walking more than one block. Associated symptoms include dyspnea on exertion and diaphoresis. No radiation to arms or jaw. No nausea or vomiting. Patient reports similar but milder episodes over the past 2 weeks that he attributed to "stress." Denies syncope or palpitations.
+
+PAST MEDICAL HISTORY
+- Hypertension (diagnosed 2018) — poorly controlled
+- Type 2 Diabetes Mellitus (diagnosed 2020) — HbA1c 8.2% last check
+- Hyperlipidemia (diagnosed 2019)
+- Obesity (BMI 34.2)
+- Former smoker (quit 2022, 15 pack-year history)
+
+CURRENT MEDICATIONS
+1. Metformin 1000mg PO BID
+2. Lisinopril 20mg PO daily
+3. Atorvastatin 40mg PO daily at bedtime
+4. Aspirin 81mg PO daily
+5. Metoprolol succinate 50mg PO daily
+
+ALLERGIES
+Penicillin — rash
+
+FAMILY HISTORY
+Father: MI at age 58, deceased
+Mother: HTN, DM2, alive age 78
+Brother: CABG at age 55
+
+SOCIAL HISTORY
+Works as office manager. Married. Sedentary lifestyle. Denies alcohol or drug use. Former smoker.
+
+VITAL SIGNS
+BP: 162/98 mmHg (elevated)
+HR: 92 bpm, regular
+RR: 18/min
+Temp: 98.4°F
+SpO2: 96% on room air
+Weight: 238 lbs | Height: 5'10"
+
+PHYSICAL EXAMINATION
+General: Alert, anxious-appearing male in mild distress
+HEENT: Normocephalic, atraumatic. PERRL. Oropharynx clear.
+Neck: No JVD. No carotid bruits.
+Cardiovascular: Regular rate and rhythm. S1/S2 normal. No murmurs, gallops, or rubs. PMI non-displaced.
+Lungs: Clear to auscultation bilaterally. No wheezes, rales, or rhonchi.
+Abdomen: Soft, non-tender, non-distended. Normal bowel sounds.
+Extremities: No peripheral edema. Pulses 2+ bilaterally.
+
+DIAGNOSTICS
+ECG: Normal sinus rhythm, rate 90. ST depression 1mm in leads V4-V6. No ST elevation.
+Troponin I: 0.08 ng/mL (borderline elevated, normal <0.04)
+BMP: Na 140, K 4.2, Cr 1.1, Glucose 186
+CBC: WBC 8.2, Hgb 14.1, Plt 245
+Lipid panel: Total cholesterol 242, LDL 158, HDL 38, TG 230
+HbA1c: 8.2%
+
+ASSESSMENT
+1. Acute coronary syndrome — NSTEMI, given positive troponin and ST changes with symptoms
+2. Uncontrolled hypertension
+3. Uncontrolled type 2 diabetes mellitus
+4. Hyperlipidemia — not at goal
+
+PLAN
+1. Admit to telemetry for ACS protocol
+2. Cardiology consult — Dr. Patel notified, will evaluate for cardiac catheterization
+3. Heparin drip per ACS protocol
+4. Continue aspirin 81mg, add clopidogrel 300mg loading then 75mg daily
+5. Increase metoprolol to 100mg daily
+6. Serial troponins q6h x 3
+7. NPO after midnight for possible cath lab
+8. Endocrine referral for diabetes management — consider insulin initiation
+9. Increase atorvastatin to 80mg daily
+10. Patient educated on diagnosis, treatment plan, and need for lifestyle modifications
+
+Electronically signed by: Dr. Sarah Chen, MD
+Date/Time: 03/15/2026 14:32 EST

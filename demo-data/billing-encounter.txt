@@ -1,0 +1,66 @@
+ENCOUNTER BILLING SUMMARY
+===========================
+Date of Service: 03/21/2026
+Provider: Dr. Sarah Chen, MD — Internal Medicine
+Facility: Riverside Community Health Center
+NPI: 1234567890 (Demo)
+
+PATIENT
+Name: Linda K. (Demo Patient — Not Real)
+DOB: 04/17/1961 | Age: 64 | Sex: Female
+MRN: DEMO-2026-0004
+Insurance: Medicare Part B
+Medicare ID: DEMO-XXXX-XXXX
+
+VISIT TYPE: Established Patient — Level 4 (99214)
+TIME: 40 minutes total (25 min face-to-face)
+
+DIAGNOSES
+Primary:
+1. Type 2 Diabetes Mellitus with diabetic chronic kidney disease, Stage 3b — E11.22
+2. Chronic kidney disease, Stage 3b — N18.32
+
+Secondary:
+3. Hypertension, essential — I10
+4. Anemia in chronic kidney disease — D63.1
+5. Hyperkalemia — E87.5
+6. Diabetic nephropathy — E11.21
+
+PROCEDURES PERFORMED
+1. Office visit, established patient, Level 4 — 99214
+2. Comprehensive metabolic panel — 80053
+3. HbA1c — 83036
+4. Urinalysis with microscopy — 81001
+5. Urine albumin/creatinine ratio — 82043
+6. CBC with differential — 85025
+7. Care coordination (>15 min) — 99490
+   Coordinated with nephrology (Dr. Rivera) and pharmacy regarding medication adjustments
+
+CLINICAL NOTES FOR BILLING
+- Medical decision making: HIGH complexity
+  - Multiple chronic conditions requiring medication adjustment
+  - New lab findings (declining eGFR from 45 to 38 over 6 months, worsening proteinuria)
+  - Risk: prescription drug management with potential interactions
+- Extended visit due to medication reconciliation and patient education on CKD progression
+- Care coordination documented: 22 minutes total (phone call with nephrologist 12 min, pharmacy consultation 10 min)
+
+MEDICATION CHANGES THIS VISIT
+- DISCONTINUED: Metformin 1000mg BID (eGFR <30 threshold approaching)
+- STARTED: Insulin glargine 10 units subcutaneous at bedtime
+- ADJUSTED: Lisinopril 40mg → 20mg (hyperkalemia)
+- ADDED: Sodium bicarbonate 650mg TID (metabolic acidosis)
+- ADDED: Ferrous sulfate 325mg daily (anemia)
+- CONTINUED: Amlodipine 10mg daily
+
+FOLLOW-UP
+- Nephrology appointment scheduled 04/05/2026
+- Return to clinic in 2 weeks for insulin titration
+- Repeat BMP in 1 week (potassium check)
+
+DOCUMENTATION GAPS TO ADDRESS
+- Need to document time spent on care coordination more granularly
+- Insulin training documentation (99211 nurse visit) should be filed separately
+- Consider adding G2211 (complexity add-on) given ongoing management of 3+ chronic conditions
+
+Electronically signed by: Dr. Sarah Chen, MD
+Date/Time: 03/21/2026 17:30 EST

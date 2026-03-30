@@ -1,0 +1,92 @@
+MEDICATION RECONCILIATION
+===========================
+Date: 03/22/2026
+Performed by: RN Patricia H.
+Provider: Dr. Sarah Chen, MD
+Facility: Riverside Community Health Center
+
+PATIENT
+Name: Linda K. (Demo Patient — Not Real)
+DOB: 04/17/1961 | Age: 64
+MRN: DEMO-2026-0004
+
+ACTIVE MEDICATIONS
+===================
+1. Insulin glargine (Lantus) 10 units SubQ at bedtime
+   - NEW as of 03/21/2026
+   - Replaces metformin (discontinued due to declining renal function)
+   - Titration: increase by 2 units every 3 days if fasting glucose >130
+
+2. Lisinopril 20mg PO daily (morning)
+   - ADJUSTED from 40mg on 03/21/2026 due to hyperkalemia (K+ 5.4)
+   - Monitor potassium in 1 week
+
+3. Amlodipine 10mg PO daily (morning)
+   - Continued — BP goal <130/80 per KDIGO guidelines
+
+4. Atorvastatin 40mg PO daily (bedtime)
+   - Continued — LDL at goal
+
+5. Sodium bicarbonate 650mg PO TID with meals
+   - NEW as of 03/21/2026
+   - For metabolic acidosis (CO2 18 on last BMP)
+
+6. Ferrous sulfate 325mg PO daily (on empty stomach)
+   - NEW as of 03/21/2026
+   - For anemia of CKD (Hgb 10.2)
+   - Take 2 hours apart from other medications
+
+7. Aspirin 81mg PO daily
+   - Continued for cardiovascular risk reduction
+
+8. Omeprazole 20mg PO daily (30 min before breakfast)
+   - Continued for GERD
+   - Note: consider de-prescribing at next visit (>8 weeks on PPI)
+
+DISCONTINUED MEDICATIONS
+=========================
+1. Metformin 1000mg PO BID
+   - Discontinued 03/21/2026
+   - Reason: eGFR declining (38), approaching contraindication threshold
+   - Replaced with insulin glargine
+
+POTENTIAL INTERACTIONS IDENTIFIED
+==================================
+1. Lisinopril + Potassium: Monitor closely — patient already had K+ 5.4
+   Risk: hyperkalemia
+   Action: Recheck BMP in 1 week
+
+2. Ferrous sulfate + Omeprazole: PPI reduces iron absorption
+   Action: Take iron on empty stomach, 2 hours before omeprazole
+
+3. Aspirin + declining renal function: Increased bleeding risk with low eGFR
+   Action: Discuss risk/benefit with Dr. Chen at next visit
+
+4. Insulin + declining renal function: Reduced insulin clearance increases hypoglycemia risk
+   Action: Conservative titration schedule, patient educated on hypoglycemia signs
+
+OTC / SUPPLEMENTS REPORTED BY PATIENT
+=======================================
+- Calcium carbonate 500mg daily (for bones)
+  ** FLAG: Calcium may worsen hyperkalemia and interact with iron absorption
+  ** Recommend: Discuss with provider, consider spacing or discontinuing
+
+- Vitamin D3 2000 IU daily
+  ** Appropriate for CKD — continue
+
+- Turmeric supplement 500mg daily
+  ** FLAG: May increase bleeding risk with aspirin, may affect kidney function
+  ** Recommend: Discuss discontinuation with provider
+
+PATIENT EDUCATION PROVIDED
+============================
+- Insulin injection technique demonstrated and return-demonstrated
+- Hypoglycemia recognition and treatment reviewed
+- Low potassium diet counseling (avoid bananas, oranges, potatoes, tomatoes)
+- Importance of taking medications as scheduled
+- When to call clinic vs go to ER
+- Follow-up appointment confirmed: 04/04/2026
+
+Reconciliation completed by: RN Patricia H.
+Verified by: Dr. Sarah Chen, MD
+Date/Time: 03/22/2026 09:15 EST
