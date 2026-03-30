@@ -1,0 +1,20 @@
+{
+  "4d8abd7a199aef5f974823174e941d32fe9403d4c08055f4bac4c34e7858a65a": {
+    "name": "Admin",
+    "role": "admin",
+    "created": "2026-03-30T00:00:00Z",
+    "active": true
+  },
+  "b43eb805d1ea976ca82930e1c2002c2ab20beffd758e8bc06b08994c753baa6c": {
+    "name": "Dr. Smith",
+    "role": "provider",
+    "created": "2026-03-30T00:31:02.451237+00:00",
+    "active": true
+  },
+  "eaa58ec59934ae394700df5c39880ba6acc3ee513cb3a6d40bdea6d0bc9d7cd3": {
+    "name": "Front Desk",
+    "role": "staff",
+    "created": "2026-03-30T00:31:02.503919+00:00",
+    "active": true
+  }
+}

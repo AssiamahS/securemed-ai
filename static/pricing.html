@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureMed AI — Pricing</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --green: #22c55e;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --muted: #64748b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+
+        /* Header */
+        .header { background: var(--primary); color: white; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; }
+        .header-left { display: flex; align-items: center; gap: 24px; }
+        .header h1 { font-size: 20px; font-weight: 600; }
+        .header h1 span { color: var(--accent); }
+        .nav-links { display: flex; gap: 16px; }
+        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 13px; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: white; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 64px 24px 40px; max-width: 700px; margin: 0 auto; }
+        .hero h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 16px; }
+        .hero h2 em { font-style: normal; color: var(--accent); }
+        .hero p { font-size: 18px; color: var(--muted); line-height: 1.6; }
+
+        /* Comparison banner */
+        .compare-banner { max-width: 800px; margin: 0 auto 40px; padding: 20px 28px; background: #fefce8; border: 1px solid #fde68a; border-radius: 12px; display: flex; align-items: center; gap: 16px; }
+        .compare-banner .math { font-size: 14px; line-height: 1.7; }
+        .compare-banner strong { color: var(--text); }
+        .compare-banner .savings { font-size: 24px; font-weight: 700; color: #059669; white-space: nowrap; }
+
+        /* Pricing cards */
+        .pricing { max-width: 1100px; margin: 0 auto; padding: 0 24px 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        @media (max-width: 800px) { .pricing { grid-template-columns: 1fr; max-width: 400px; } }
+
+        .plan { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; display: flex; flex-direction: column; position: relative; }
+        .plan.featured { border: 2px solid var(--accent); box-shadow: 0 4px 24px rgba(59,130,246,0.12); }
+        .plan-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; font-size: 11px; font-weight: 600; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .plan-name { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+        .plan-price { font-size: 48px; font-weight: 700; margin-bottom: 4px; letter-spacing: -1px; }
+        .plan-price .period { font-size: 16px; font-weight: 400; color: var(--muted); }
+        .plan-desc { font-size: 14px; color: var(--muted); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+        .plan-users { font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+
+        .features { list-style: none; flex: 1; margin-bottom: 24px; }
+        .features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; padding: 6px 0; }
+        .features .check { color: var(--green); font-weight: bold; flex-shrink: 0; }
+        .features .x { color: #cbd5e1; font-weight: bold; flex-shrink: 0; }
+
+        .plan-cta { display: block; text-align: center; padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: none; width: 100%; }
+        .cta-primary { background: var(--accent); color: white; }
+        .cta-primary:hover { background: var(--accent-hover); }
+        .cta-outline { background: white; color: var(--text); border: 1px solid var(--border); }
+        .cta-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Why section */
+        .why { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+        .why h3 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 40px; }
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
+        .why-card { padding: 24px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; }
+        .why-card h4 { font-size: 15px; margin-bottom: 6px; }
+        .why-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+        /* Comparison table */
+        .compare { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+        .compare h3 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 32px; }
+        .compare table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .compare th { text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--border); font-weight: 600; }
+        .compare td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+        .compare tr:last-child td { border-bottom: none; }
+        .compare .them { color: var(--muted); }
+        .compare .us { color: var(--accent); font-weight: 600; }
+        .compare .winner { background: #eff6ff; }
+
+        /* FAQ */
+        .faq { max-width: 700px; margin: 0 auto; padding: 0 24px 80px; }
+        .faq h3 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 32px; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
+        .faq-q { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+        .faq-a { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+        /* CTA footer */
+        .cta-footer { text-align: center; padding: 64px 24px; background: var(--primary); color: white; }
+        .cta-footer h3 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+        .cta-footer p { font-size: 16px; color: #94a3b8; margin-bottom: 24px; }
+        .cta-footer a { display: inline-block; padding: 14px 32px; background: var(--accent); color: white; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; }
+        .cta-footer a:hover { background: var(--accent-hover); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <h1><span>SecureMed</span> AI</h1>
+            <nav class="nav-links">
+                <a href="/">Dashboard</a>
+                <a href="/pricing" class="active">Pricing</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h2>Private AI for Healthcare.<br><em>No Per-User Fees.</em></h2>
+        <p>Your data never leaves your network. No cloud dependency. No per-seat pricing traps. One flat rate for your entire organization.</p>
+    </div>
+
+    <div class="compare-banner">
+        <div class="math">
+            A 50-person clinic on per-user AI tools pays <strong>$25,000 - $50,000/year</strong>.<br>
+            SecureMed is a flat rate — same price whether you have 5 users or 500.
+        </div>
+        <div class="savings">Save 80%+</div>
+    </div>
+
+    <div class="pricing">
+        <!-- Starter -->
+        <div class="plan">
+            <div class="plan-name">Starter</div>
+            <div class="plan-price">$199<span class="period">/mo</span></div>
+            <div class="plan-desc">For small clinics getting started with private AI</div>
+            <div class="plan-users">Up to 10 users included</div>
+            <ul class="features">
+                <li><span class="check">&#10003;</span> Private LLM (Qwen 2.5 7B)</li>
+                <li><span class="check">&#10003;</span> Document upload + analysis</li>
+                <li><span class="check">&#10003;</span> Chat-based medical AI</li>
+                <li><span class="check">&#10003;</span> Role-based access control</li>
+                <li><span class="check">&#10003;</span> Audit logging</li>
+                <li><span class="check">&#10003;</span> Email support</li>
+                <li><span class="x">&#10005;</span> Custom model fine-tuning</li>
+                <li><span class="x">&#10005;</span> ELK monitoring stack</li>
+                <li><span class="x">&#10005;</span> Terraform IaC deployment</li>
+            </ul>
+            <button class="plan-cta cta-outline">Get Started</button>
+        </div>
+
+        <!-- Professional -->
+        <div class="plan featured">
+            <div class="plan-badge">Most Popular</div>
+            <div class="plan-name">Professional</div>
+            <div class="plan-price">$499<span class="period">/mo</span></div>
+            <div class="plan-desc">For clinics that need full compliance infrastructure</div>
+            <div class="plan-users">Unlimited users</div>
+            <ul class="features">
+                <li><span class="check">&#10003;</span> Everything in Starter</li>
+                <li><span class="check">&#10003;</span> Larger model (13B - 30B)</li>
+                <li><span class="check">&#10003;</span> Unlimited document analysis</li>
+                <li><span class="check">&#10003;</span> ELK monitoring + dashboards</li>
+                <li><span class="check">&#10003;</span> Terraform deployment (AWS)</li>
+                <li><span class="check">&#10003;</span> CloudTrail audit integration</li>
+                <li><span class="check">&#10003;</span> KMS encryption at rest</li>
+                <li><span class="check">&#10003;</span> VPC private networking</li>
+                <li><span class="check">&#10003;</span> Priority support</li>
+            </ul>
+            <button class="plan-cta cta-primary">Start Free Trial</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="plan">
+            <div class="plan-name">Enterprise</div>
+            <div class="plan-price">Custom</div>
+            <div class="plan-desc">For health systems and organizations with specific requirements</div>
+            <div class="plan-users">Unlimited users + locations</div>
+            <ul class="features">
+                <li><span class="check">&#10003;</span> Everything in Professional</li>
+                <li><span class="check">&#10003;</span> On-premise deployment</li>
+                <li><span class="check">&#10003;</span> Custom model fine-tuning</li>
+                <li><span class="check">&#10003;</span> Multi-site deployment</li>
+                <li><span class="check">&#10003;</span> EHR/EMR integration</li>
+                <li><span class="check">&#10003;</span> Dedicated support engineer</li>
+                <li><span class="check">&#10003;</span> Custom compliance reports</li>
+                <li><span class="check">&#10003;</span> SLA guarantee</li>
+                <li><span class="check">&#10003;</span> Staff training sessions</li>
+            </ul>
+            <button class="plan-cta cta-outline">Contact Sales</button>
+        </div>
+    </div>
+
+    <!-- Why SecureMed -->
+    <div class="why">
+        <h3>Why SecureMed Over Cloud AI Tools?</h3>
+        <div class="why-grid">
+            <div class="why-card">
+                <h4>Zero Trust Required</h4>
+                <p>Your data literally never leaves your network. Other tools ask you to trust their cloud. We don't ask for trust at all — because there's nothing to trust. The AI runs on your hardware.</p>
+            </div>
+            <div class="why-card">
+                <h4>No Per-User Pricing Trap</h4>
+                <p>Cloud AI tools charge $30-100 per user per month. At 50 users, that's $18,000-$60,000/year. SecureMed is one flat price — add users at no extra cost.</p>
+            </div>
+            <div class="why-card">
+                <h4>Model Flexibility</h4>
+                <p>Locked into one AI provider? Not here. Run Qwen, Llama, Mistral, or any open model. Need a medical-specific model? Swap it in. Your infrastructure, your choice.</p>
+            </div>
+            <div class="why-card">
+                <h4>True On-Premise Option</h4>
+                <p>Some healthcare organizations are legally required to keep data on-premise. Cloud-only tools can't serve them. SecureMed can run on a server in your building with zero internet dependency.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison -->
+    <div class="compare">
+        <h3>SecureMed vs. The Competition</h3>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Hathr.ai</th>
+                <th>ChatGPT Enterprise</th>
+                <th>SecureMed AI</th>
+            </tr>
+            <tr>
+                <td>Data stays on-premise</td>
+                <td class="them">No (their cloud)</td>
+                <td class="them">No (OpenAI cloud)</td>
+                <td class="us winner">Yes (your hardware)</td>
+            </tr>
+            <tr>
+                <td>Per-user pricing</td>
+                <td class="them">$49-499/user/mo</td>
+                <td class="them">$60/user/mo</td>
+                <td class="us winner">Flat rate</td>
+            </tr>
+            <tr>
+                <td>50-user annual cost</td>
+                <td class="them">$29,400 - $299,400</td>
+                <td class="them">$36,000</td>
+                <td class="us winner">$5,988</td>
+            </tr>
+            <tr>
+                <td>BAA available</td>
+                <td class="them">Yes (24hr)</td>
+                <td class="them">Yes</td>
+                <td class="us winner">N/A (self-hosted)</td>
+            </tr>
+            <tr>
+                <td>Model choice</td>
+                <td class="them">Claude only</td>
+                <td class="them">GPT only</td>
+                <td class="us winner">Any open model</td>
+            </tr>
+            <tr>
+                <td>On-premise option</td>
+                <td class="them">No</td>
+                <td class="them">No</td>
+                <td class="us winner">Yes</td>
+            </tr>
+            <tr>
+                <td>Document analysis</td>
+                <td>Yes (500K words)</td>
+                <td>Yes</td>
+                <td class="us">Yes (100K+ words)</td>
+            </tr>
+            <tr>
+                <td>Internet required</td>
+                <td class="them">Yes</td>
+                <td class="them">Yes</td>
+                <td class="us winner">No</td>
+            </tr>
+            <tr>
+                <td>Infrastructure as Code</td>
+                <td class="them">No</td>
+                <td class="them">No</td>
+                <td class="us winner">Terraform included</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item">
+            <div class="faq-q">Is SecureMed actually HIPAA compliant?</div>
+            <div class="faq-a">SecureMed is designed for HIPAA-aligned deployments. Because the AI runs entirely on your infrastructure, PHI never leaves your network — eliminating the biggest compliance risk. We include encryption at rest (KMS), audit logging, role-based access control, and VPC isolation. You maintain full control, which simplifies your compliance posture significantly.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Do I need a BAA with SecureMed?</div>
+            <div class="faq-a">No. BAAs are required when a third party handles your PHI. Since SecureMed runs on your own infrastructure, there's no third-party access to your data. If deployed on AWS, you should have a BAA with AWS (available free via AWS Artifact) for the underlying compute.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">How does the AI quality compare to ChatGPT or Claude?</div>
+            <div class="faq-a">For focused medical tasks — summarization, document analysis, differential diagnosis — open models like Qwen 2.5 perform comparably. For general conversation, cloud models are stronger. The tradeoff: you get complete data privacy and no per-user costs. Enterprise clients can also fine-tune models on their own medical data for superior domain performance.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">What hardware do I need?</div>
+            <div class="faq-a">Starter: Any machine with 16GB+ RAM (runs locally on Mac or Linux). Professional: AWS t3.xlarge (16GB RAM, ~$120/mo) or equivalent. Enterprise: We size hardware to your workload. A mini PC in your server closet works for small clinics.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can I switch AI models?</div>
+            <div class="faq-a">Yes. SecureMed runs on Ollama, which supports dozens of open models. Switch from Qwen to Llama, Mistral, or a medical-tuned model with one command. No vendor lock-in.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">What does deployment look like?</div>
+            <div class="faq-a">Professional plan includes Terraform scripts that deploy your entire HIPAA-compliant infrastructure in under 30 minutes: encrypted VPC, private subnets, the AI server, ELK monitoring, CloudTrail — everything. One command. If it breaks, one command rebuilds it identically.</div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-footer">
+        <h3>Ready to Own Your AI Infrastructure?</h3>
+        <p>Stop paying per user. Stop sending patient data to the cloud. Start today.</p>
+        <a href="mailto:sylvesterassiamahhcp@gmail.com?subject=SecureMed%20AI%20Inquiry">Schedule a Demo</a>
+    </div>
+</body>
+</html>
