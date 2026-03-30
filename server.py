@@ -6,10 +6,12 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+import fastapi.responses
 import httpx
 import yaml
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 # Load config
@@ -54,6 +56,11 @@ app = FastAPI(
     openapi_url=None,
 )
 
+# Serve the UI
+static_dir = Path(__file__).parent / "static"
+if static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+
 OLLAMA_URL = config["ollama"]["base_url"]
 MODEL = config["ollama"]["model"]
 MAX_TOKENS = config["security"]["max_tokens"]
@@ -75,6 +82,11 @@ def verify_api_key(authorization: str | None) -> str:
     if hashed not in api_key_hashes:
         raise HTTPException(status_code=403, detail="Invalid API key")
     return hashed[:8]
+
+
+@app.get("/")
+async def root():
+    return fastapi.responses.FileResponse(static_dir / "index.html")
 
 
 @app.post("/api/query")
